@@ -1,0 +1,49 @@
+bookstore_homepage:
+    path:     /hello/{name}
+    defaults: { _controller: BookstoreBundle:Default:index }
+    
+display_books:
+    pattern: /book/browse
+    defaults: { _controller: BookstoreBundle:Book:browse }
+    
+search_books:
+    pattern: /book/search
+    defaults: { _controller: BookstoreBundle:Book:search }
+    
+details_books:
+    pattern: /book/details/{id}
+    defaults: { _controller: BookstoreBundle:Book:details }
+   # requirements:
+    #    id: \d+
+        
+rate_books:
+    pattern: /book/rate
+    defaults: { _controller: BookstoreBundle:Book:rate }
+    
+create_user:
+    pattern: /user/create
+    defaults: { _controller: BookstoreBundle:User:create }
+    
+edit_user:
+    pattern: /user/edit/{id}
+    defaults: { _controller: BookstoreBundle:User:edit }
+    
+user_login:
+    pattern: /user/login
+    defaults: { _controller: BookstoreBundle:User:login }
+    
+cart_add:
+    pattern: /cart/add
+    defaults: { _controller: BookstoreBundle:Cart:add }
+    
+cart_delete:
+    pattern: /cart/delete/{id}
+    defaults: { _controller: BookstoreBundle:Cart:delete }
+    
+cart_view:
+    pattern: /cart/view
+    defaults: { _controller: BookstoreBundle:Cart:view }
+    
+cart_buy:
+    pattern: /cart/buy
+    defaults: { _controller: BookstoreBundle:Cart:buy }  
