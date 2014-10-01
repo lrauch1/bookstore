@@ -23,6 +23,6 @@ public function loginAction(){
 }
 
 public function logoutAction(){
-    return $this->render('BookstoreBundle:User:login.html.twig');
+    return $this->render('BookstoreBundle:User:logout.html.twig');
 }
 }

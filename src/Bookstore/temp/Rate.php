@@ -7,9 +7,9 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cart")
+ * @ORM\Table(name="rate")
  */
-class Cart {
+class Rate {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -27,4 +27,10 @@ class Cart {
      */
     protected $book;
 
+     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $rating;
+    
+    protected $comment;
 }

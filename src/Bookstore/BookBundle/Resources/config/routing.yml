@@ -1,6 +1,6 @@
 bookstore_homepage:
-    path:     /hello/{name}
-    defaults: { _controller: BookstoreBundle:Default:index }
+    path:     /
+    defaults: { _controller: BookstoreBundle:Book:index }
     
 display_books:
     pattern: /book/browse
