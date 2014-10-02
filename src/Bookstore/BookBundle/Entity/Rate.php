@@ -3,15 +3,14 @@
 namespace Bookstore\BookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Bookstore\BookBundle\Entity\Book;
-use Bookstore\BookBundle\Entity\User;
-//use Bookstore\BookBundle\Entity\Cart as Cart;
+use Bookstore\BookBundle\Entity\Book as Book;
+use Bookstore\BookBundle\Entity\User as User;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="cart")
+ * @ORM\Table(name="rate")
  */
-class Cart {
+class Rate {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -28,7 +27,16 @@ class Cart {
      * @ORM\JoinColumn(name="book_id", referencedColumnName="id")
      */
     protected $book;
-
+    
+     /**
+     * @ORM\Column(type="integer")
+     */
+    protected $rating;
+    
+     /**
+     * @ORM\Column(type="string")
+     **/
+    protected $comment;
 
     /**
      * Get id
@@ -41,10 +49,56 @@ class Cart {
     }
 
     /**
+     * Set rating
+     *
+     * @param integer $rating
+     * @return Rate
+     */
+    public function setRating($rating)
+    {
+        $this->rating = $rating;
+
+        return $this;
+    }
+
+    /**
+     * Get rating
+     *
+     * @return integer 
+     */
+    public function getRating()
+    {
+        return $this->rating;
+    }
+
+    /**
+     * Set comment
+     *
+     * @param string $comment
+     * @return Rate
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
+
+        return $this;
+    }
+
+    /**
+     * Get comment
+     *
+     * @return string 
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
      * Set user
      *
      * @param \Bookstore\BookBundle\Entity\User $user
-     * @return Cart
+     * @return Rate
      */
     public function setUser(User $user = null)
     {
@@ -67,7 +121,7 @@ class Cart {
      * Set book
      *
      * @param \Bookstore\BookBundle\Entity\Book $book
-     * @return Cart
+     * @return Rate
      */
     public function setBook(Book $book = null)
     {

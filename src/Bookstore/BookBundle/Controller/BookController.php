@@ -15,7 +15,11 @@ class BookController extends Controller
     }
     
 public function browseAction(){
-    return $this->render('BookstoreBundle:Book:browse.html.twig');
+     $books = $this->getDoctrine()
+                ->getRepository('BookstoreBundle:Book')
+                ->findAll();
+        return $this->render('BookstoreBundle:Book:display.html.php', array('books' => $books));
+    //return $this->render('BookstoreBundle:Book:browse.php');
     }
 
 public function searchAction(){
