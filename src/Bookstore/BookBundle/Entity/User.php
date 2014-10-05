@@ -4,12 +4,13 @@ namespace Bookstore\BookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Bookstore\BookBundle\Entity\User as User;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Bookstore\BookBundle\Entity\BookRepository")
  * @ORM\Table(name="user")
  */
-class User {
+class User implements UserInterface, \Serializable {
     /**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -20,6 +21,12 @@ class User {
      * @ORM\Column(type="string",	length=10)
      */
     protected $username;
+    
+    /**
+     * @ORM\Column(type="string", length=32)
+     */
+    protected $salt;
+    
     /**
      * @ORM\Column(type="string",       length=10)
      */
@@ -28,6 +35,17 @@ class User {
      * @ORM\Column(type="string")
      */
     protected $email;
+    
+    /**
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    protected $isActive;
+
+    public function __construct()
+    {
+        $this->isActive = true;
+        $this->salt = md5(uniqid(null, true));
+    }
 
     /**
      * Get id
@@ -61,6 +79,14 @@ class User {
     {
         return $this->username;
     }
+    
+        /**
+     * @inheritDoc
+     */
+    public function getSalt()
+    {
+        return $this->salt;
+    }
 
     /**
      * Set password
@@ -85,6 +111,14 @@ class User {
         return $this->password;
     }
 
+      /**
+     * @inheritDoc
+     */
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
     /**
      * Set email
      *
@@ -106,5 +140,31 @@ class User {
     public function getEmail()
     {
         return $this->email;
+    }
+        /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+
+    /**
+     * @see \Serializable::serialize()
+     */
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+        ));
+    }
+
+    /**
+     * @see \Serializable::unserialize()
+     */
+    public function unserialize($serialized)
+    {
+        list (
+            $this->id,
+        ) = unserialize($serialized);
     }
 }
