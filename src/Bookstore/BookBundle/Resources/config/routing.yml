@@ -13,8 +13,8 @@ search_books:
 details_books:
     pattern: /book/details/{id}
     defaults: { _controller: BookstoreBundle:Book:details }
-   # requirements:
-    #    id: \d+
+    requirements:
+        id: \d+
         
 rate_books:
     pattern: /book/rate

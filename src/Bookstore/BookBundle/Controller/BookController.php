@@ -20,14 +20,18 @@ public function browseAction(){
                 ->findAll();
         return $this->render('BookstoreBundle:Book:display.html.php', array('books' => $books));
     //return $this->render('BookstoreBundle:Book:browse.php');
-    }
-
+    }    
+    
 public function searchAction(){
     return $this->render('BookstoreBundle:Book:search.html.twig');
 }
 
-public function detailsAction(){
-    return $this->render('BookstoreBundle:Book:details.html.twig');
+public function detailsAction($id){
+    $book = $this->getDoctrine()
+            ->getRepository('BookstoreBundle:Book')
+            ->find($id);
+    //var_dump($book);
+    return $this->render('BookstoreBundle:Book:details.html.php', array('book' => $book));
 }
 
 public function rateAction(){
