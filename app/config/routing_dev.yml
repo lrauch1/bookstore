@@ -16,3 +16,18 @@ _main:
 # AcmeDemoBundle routes (to be removed)
 _acme_demo:
     resource: "@AcmeDemoBundle/Resources/config/routing.yml"
+    
+login:
+    pattern:   /login
+    defaults:  { _controller: BookstoreBundle:Security:login }
+login_check:
+    pattern:   /login_check
+    defaults:  { _controller: BookstoreBundle:Security:dumpString }
+
+test_security:
+    pattern: /secure_area
+    defaults: {_controller: BookstoreBundle:Security:dumpString }
+    
+logout:
+    pattern:     /logout
+    defaults: {_controller: BookstoreBundle:Security:dumpString }

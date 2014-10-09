@@ -6,7 +6,7 @@ display_books:
     pattern: /book/browse
     defaults: { _controller: BookstoreBundle:Book:browse }
     
-search_books:
+search:
     pattern: /book/search
     defaults: { _controller: BookstoreBundle:Book:search }
     

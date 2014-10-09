@@ -1,50 +1,57 @@
-<!--DISPLAY View -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="<?php echo $view['assets']->getUrl('css/site.css')
-?>"/>
-        <title>Browse Books</title>
-    </head>
-    <body>
-        <div id="header">Browse Books</div>
+  <?php
+            include 'header.php';
+        ?>
         <div>
-            <table border="0">
+            <table border="1">
                 <tr class="tbl_header">
+                    <th>Picture</th>
                     <th>Title</th>
                     <th>Author</th>
+                    <th>ISBN</th>
+                    <!--<th>Course</th>-->
+                    <!--<th>Instructor</th>-->
                     <th>Price</th>
                     <th>Rating</th>
-                    <th>Image</th>
+                    <!--<th>Description</th>-->
+                    <!--<th>Quantity</th>-->
                 </tr>
                 <?php
-                $stripe = false;
-                foreach ($books as $entry) {
-                    // Shade every 2nd line
-                    $stripe = !$stripe;
-                    if ($stripe) {
-                        echo '<tr class="odd"> ';
-                    } else {
-                        echo '<tr class="even"> ';
+                    $stripe=false;
+                    foreach($books as $book){
+                        $stripe=!$stripe;
+                        if ($stripe) {
+                            echo "<tr class=\"odd\">";
+                        } else {
+                            echo "<tr class=\"even\">";
+                        }
+                        $detailurl=$view['router']->generate('details_books',
+                                array(
+                                    'id'=>$book->getId()
+                                ));
+                        echo<<<EOD
+<td>
+    <a href="{$detailurl}">
+        <img src="{$book->getImg()}" width=100>
+    </a>            
+</td>
+<td>
+    <a href="{$detailurl}">
+        {$book->getTitle()}
+    </a>
+</td>
+<td>{$book->getAuthor()}</td>
+<td>{$book->getIsbn()}</td>
+<!--<td>ITAS{$book->getCourse()}</td>-->
+<!--<td>{$book->getInstructor()}</td>-->
+<td>{$book->getPrice()}</td>
+<td>{$book->getRating()}</td>
+<!--<td>{$book->getDescShort()}</td>-->
+<!--<td>{$book->getQty()}</td>-->
+</tr>
+EOD;
                     }
-                    echo '<td>' . $entry->getTitle() . '</td>';
-                    echo '<td>' . $entry->getAuthor() . '</td>';
-                    echo '<td>' . $entry->getPrice() . '</td>';
-                    echo '<td>' . $entry->getRating() . '</td>';
-                    echo '<td>' . $entry->getImg() . '</td>';                    
-                    echo '</div>';
-                    echo '<td>';
-                    echo '<div class="tbl_header">';
-                    echo "<a href='" . $view['router']->generate("details_books",array("id"=>$entry->getId())) . "'> View</a> ";
-                    //echo "<a href='/blog/delete/" . $entry->getId() . "'> Delete</a> ";
-                    echo '</div>';
-                    //echo '</td>';
-                    echo '</tr>';
-                }
                 ?>
             </table>
-            <p><a href="/">Back to Browse</a></p>
         </div>
     </body>
 </html>

@@ -1,50 +1,53 @@
-<!--DISPLAY View -->
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <link rel="stylesheet" type="text/css" href="<?php echo $view['assets']->getUrl('css/site.css')
-?>"/>
-        <title>Book Detail</title>
-    </head>
-    <body>
-        <div id="header">Book Detail</div>
+<?php include 'header.php'; ?>
         <div>
-            <table border="0">
-                <tr class="tbl_header">
-                    <th>Title</th>
-                    <th>Author</th>
-                    <th>Price</th>
-                    <th>Rating</th>
-                    <th>Image</th>
-                </tr>
+            <table border="1">
                 <?php
-                $stripe = false;
-                //foreach ($books as $entry) {
-                    // Shade every 2nd line
-                    $stripe = !$stripe;
-                    if ($stripe) {
-                        echo '<tr class="odd"> ';
-                    } else {
-                        echo '<tr class="even"> ';
-                    }
-                    echo '<td>' . $book->getTitle() . '</td>';
-                    echo '<td>' . $book->getAuthor() . '</td>';
-                    echo '<td>' . $book->getPrice() . '</td>';
-                    echo '<td>' . $book->getRating() . '</td>';
-                    echo '<td>' . $book->getImg() . '</td>';                    
-                    echo '</div>';
-                    echo '<td>';
-                    echo '<div class="tbl_header">';
-                   // echo "<a href='" . $view['router']->generate("details_books",array("id"=>$entry->getId())) . "'> View</a> ";
-                    //echo "<a href='/blog/delete/" . $entry->getId() . "'> Delete</a> ";
-                    echo '</div>';
-                    //echo '</td>';
-                    echo '</tr>';
-                
+                    echo<<<EOD
+<tr class="odd">
+    <td>Title</td>
+    <td>{$book->getTitle()}</td>
+</tr>
+<tr class="even">
+    <td>Author</td>
+    <td>{$book->getAuthor()}</td>
+</tr>
+<tr class="odd">
+    <td>ISBN</td>
+    <td>{$book->getIsbn()}</td>
+</tr>
+<tr class="even">
+    <td>Course</td>
+    <td>ITAS{$book->getCourse()}</td>
+</tr>
+<tr class="odd">
+    <td>Instructor</td>
+    <td>{$book->getInstructor()}</td>
+</tr>
+<tr class="even">
+    <td>Price</td>
+    <td>{$book->getPrice()}</td>
+</tr>
+<tr class="odd">
+    <td>Rating</td>
+    <td>{$book->getRating()}</td>
+</tr>
+<tr class="even">
+    <td>Description</td>
+    <td>{$book->getDesclong()}</td>
+</tr>
+<tr class="odd">
+    <td>Quantity</td>
+    <td>{$book->getQty()}</td>
+</tr>
+EOD;
                 ?>
             </table>
-            <p><a href="/">Back to Browse</a></p>
+            <a href="<?php
+              //  echo $view['router']->generate('add_cart',array('bid'=>$book->getId()));
+            ?>">Add to cart</a><br>
+            <a href="<?php
+                echo $view['router']->generate('display_books');
+            ?>">Back</a>
         </div>
     </body>
 </html>
