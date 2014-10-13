@@ -6,8 +6,16 @@
         <title>ITAS255 Project 2 - Browse</title>
     </head>
     <body>
-
-
+        <?php
+$security=$app->getSecurity();
+if($security->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+    $uname=$security->getToken()->getUser()->getUsername();
+    $uid=$security->getToken()->getUser()->getId();
+}else{
+    $uname=NULL;
+    $uid=NULL;
+}
+?>
             <td>
                 <form action="<?php echo $view['router']->generate('search'); ?>" method="POST">
                     Search By:
