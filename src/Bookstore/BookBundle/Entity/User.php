@@ -25,7 +25,7 @@ class User implements UserInterface, \Serializable {
     /**
      * @ORM\Column(type="string", length=32)
      */
-    protected $salt;
+  //  protected $salt;
     
     /**
      * @ORM\Column(type="string",       length=10)
@@ -41,11 +41,11 @@ class User implements UserInterface, \Serializable {
      */
     protected $isActive;
 
-    public function __construct()
-    {
-        $this->isActive = true;
-        $this->salt = md5(uniqid(null, true));
-    }
+//    public function __construct()
+//    {
+//        $this->isActive = true;
+//        $this->salt = md5(uniqid(null, true));
+//    }
 
     /**
      * Get id
@@ -85,7 +85,7 @@ class User implements UserInterface, \Serializable {
      */
     public function getSalt()
     {
-        return $this->salt;
+        return null;
     }
 
     /**
@@ -155,6 +155,9 @@ class User implements UserInterface, \Serializable {
     {
         return serialize(array(
             $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
         ));
     }
 
@@ -165,6 +168,9 @@ class User implements UserInterface, \Serializable {
     {
         list (
             $this->id,
+            $this->username,
+            $this->password,
+            $this->email,
         ) = unserialize($serialized);
     }
 

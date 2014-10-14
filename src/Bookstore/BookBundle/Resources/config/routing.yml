@@ -32,6 +32,28 @@ user_login:
     pattern: /user/login
     defaults: { _controller: BookstoreBundle:User:login }
     
+    
+login:
+    pattern: /login
+    defaults: { _controller: BookstoreBundle:Security:login }
+login_check:
+    pattern: /login_check
+    #dont need defaults as the security component will intercept this
+logout:
+    pattern: /logout
+    #again, security component will intercept so no defaults
+account:
+    pattern: /account/{id}
+    defaults: { _controller: BookstoreBundle:Security:account }
+    requirements:
+        id: \d+
+account_change:
+    pattern: /account/{id}/submit
+    defaults: { _controller: BookstoreBundle:Security:account_change }
+    requirements:
+        id: \d+    
+    
+    
 cart_add:
     pattern: /cart/add
     defaults: { _controller: BookstoreBundle:Cart:add }
@@ -40,7 +62,7 @@ cart_delete:
     pattern: /cart/delete/{id}
     defaults: { _controller: BookstoreBundle:Cart:delete }
     
-cart_view:
+view_cart:
     pattern: /cart/view
     defaults: { _controller: BookstoreBundle:Cart:view }
     
