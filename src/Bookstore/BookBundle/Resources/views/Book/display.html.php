@@ -45,7 +45,7 @@
 <!--<td>ITAS{$book->getCourse()}</td>-->
 <!--<td>{$book->getInstructor()}</td>-->
 <td>{$book->getPrice()}</td>
-<td>{$book->getRating()}</td>
+<td>{$ratings[$book->getBid()]}</td>
 <!--<td>{$book->getDescShort()}</td>-->
 <!--<td>{$book->getQty()}</td>-->
 </tr>

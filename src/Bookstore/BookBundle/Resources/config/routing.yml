@@ -75,3 +75,7 @@ cart_buy:
 update_cart:
     path: /cart/update
     defaults: { _controller: BookstoreBundle:Cart:update }
+    
+rate_form:
+    pattern: /rate/{id}
+    defaults: { _controller: BookstoreBundle:Book:rate } 

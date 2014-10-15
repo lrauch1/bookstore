@@ -3,6 +3,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="<?php echo $view['assets']->getUrl('css/site.css') ?>"> 
+        <script src="https://efalder.ca/jquery.min.js"></script>
         <title>ITAS255 Project 2 - Browse</title>
     </head>
     <body>

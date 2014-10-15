@@ -28,8 +28,27 @@
     <td>{$book->getPrice()}</td>
 </tr>
 <tr class="odd">
-    <td>Rating</td>
-    <td>{$book->getRating()}</td>
+<td>Ratings</td>
+    <td>
+        <table border=1>
+            <tr>
+                <th>
+                    User
+                </th>
+                <th>
+                    Rating
+                </th>
+                <th>
+                    Comment
+                </th>
+            </tr>
+EOD;
+                    foreach ($ratings as $rating) {
+                        echo "<tr><td>{$rating['user']}</td><td>{$rating['rating']}</td><td>{$rating['comment']}</td></tr>";
+                    }
+echo<<<EOD
+        </table>
+    </td>
 </tr>
 <tr class="even">
     <td>Description</td>
@@ -42,6 +61,40 @@
 EOD;
                 ?>
             </table>
+            <?php
+            if($security->isGranted('IS_AUTHENTICATED_REMEMBERED')){
+                $disabler="";
+                foreach($ratings as $rating){
+                    if($rating['user']==$uname)$disabler="disabled";
+                }
+                echo<<<EOD
+            <form action="{$view['router']->generate('rate_form',array('id'=>$book->getBid()))}" method="POST">
+                <table border="0" class="no100Width">
+                    <tr>
+                        <th>
+                            Rating:
+                        </th>
+                        <td>
+                            <input type="number" name="rating" min="1" max="5" value="5">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Comment:
+                        </th>
+                        <td>
+                            <input type="text" name="comment">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td><input type="submit" value="Rate!" {$disabler}></td>
+                    </tr>
+                </table>
+            </form>
+EOD;
+}
+?>
             <a href="<?php
                 echo $view['router']->generate('cart_add',array('bid'=>$book->getBid()));
             ?>">Add to cart</a><br>

@@ -78,6 +78,22 @@ class CartController extends Controller {
             'status'=>true
         )));
     }
+    
+    public function purchaseAction() {
+        $this->enforceUserSecurity();
+        $em = $this->getDoctrine()->getManager();
+        $uid=$this->container->get('security.context')->getToken()->getUser()->getId();
+        $repository=$this->getDoctrine()->getRepository('BookstoreBundle:Cart');
+        $cart=$repository->findByUid($uid);
+        foreach($cart as $cartentry){
+            $cartentry->getBook()->setQty($cartentry->getBook()->getQty()-$cartentry->getQty());
+            $em->remove($cartentry);
+        }
+        $em->flush();
+        return $this->render('BookstoreBundle:Cart:purchase.html.php',array(
+            'cart'=>$cart
+        ));
+    }
 
     public function deleteAction() {
         return $this->render('BookstoreBundle:Cart:delete.html.twig');

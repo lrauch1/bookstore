@@ -5,6 +5,7 @@ namespace Bookstore\BookBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Bookstore\BookBundle\Entity\Rate;
 //use Bookstore\BookBundle\Entity\Books;
 
 class BookController extends Controller
@@ -18,7 +19,21 @@ public function browseAction(){
      $books = $this->getDoctrine()
                 ->getRepository('BookstoreBundle:Book')
                 ->findAll();
-        return $this->render('BookstoreBundle:Book:display.html.php', array('books' => $books));
+     $ratings=$this->getDoctrine()
+                ->getRepository('BookstoreBundle:Rate')
+                ->findAll();
+        $ratingsToPass=array();
+        $numOfRatings=array();
+        foreach ($ratings as $rating) {
+            if(!isset($ratingsToPass[$rating->getBid()]))$ratingsToPass[$rating->getBid()]=0;
+            $ratingsToPass[$rating->getBid()]+=$rating->getRating();
+            if(!isset($numOfRatings[$rating->getBid()]))$numOfRatings[$rating->getBid()]=0;
+            $numOfRatings[$rating->getBid()]++;
+        }
+        foreach($ratingsToPass as $bid=>$rating){
+            $ratingsToPass[$bid]=$rating/$numOfRatings[$bid]."/5";
+        }
+        return $this->render('BookstoreBundle:Book:display.html.php', array('books' => $books, 'ratings'=>$ratingsToPass));
     //return $this->render('BookstoreBundle:Book:browse.php');
     }    
     
@@ -28,7 +43,7 @@ public function searchAction(){
             case "title":
                 $qb=$repository->createQueryBuilder('b');
                 $qb->where('b.title LIKE :title')
-                        ->orderBy('b.id', 'ASC')
+                        ->orderBy('b.bid', 'ASC')
                         ->setParameter('title', $_POST['text']."%");
                 $query = $qb->getQuery();
                 $result=$query->getResult();
@@ -36,7 +51,7 @@ public function searchAction(){
             case "isbn":
                 $qb=$repository->createQueryBuilder('b');
                 $qb->where('b.isbn LIKE :isbn')
-                        ->orderBy('b.id', 'ASC')
+                        ->orderBy('b.bid', 'ASC')
                         ->setParameter('isbn', $_POST['text']."%");
                 $query = $qb->getQuery();
                 $result=$query->getResult();
@@ -44,7 +59,7 @@ public function searchAction(){
             case "course":
                 $qb=$repository->createQueryBuilder('b');
                 $qb->where('b.course LIKE :course')
-                        ->orderBy('b.id', 'ASC')
+                        ->orderBy('b.bid', 'ASC')
                         ->setParameter('course', $_POST['text']."%");
                 $query = $qb->getQuery();
                 $result=$query->getResult();
@@ -52,7 +67,7 @@ public function searchAction(){
             case "instructor":
                 $qb=$repository->createQueryBuilder('b');
                 $qb->where('b.instructor LIKE :instructor')
-                        ->orderBy('b.id', 'ASC')
+                        ->orderBy('b.bid', 'ASC')
                         ->setParameter('instructor', $_POST['text']."%");
                 $query = $qb->getQuery();
                 $result=$query->getResult();
@@ -64,23 +79,68 @@ public function searchAction(){
                 throw new \Exception("Something went wrong while searching for '{$_POST['type']}:{$_POST['text']}'", 500);
                 break;
         }
+         $ratings=$this->getDoctrine()
+                ->getRepository('BookstoreBundle:Rate')
+                ->findAll();
+        $ratingsToPass=array();
+        $numOfRatings=array();
+        foreach ($ratings as $rating) {
+            if(!isset($ratingsToPass[$rating->getBid()]))$ratingsToPass[$rating->getBid()]=0;
+            $ratingsToPass[$rating->getBid()]+=$rating->getRating();
+            if(!isset($numOfRatings[$rating->getBid()]))$numOfRatings[$rating->getBid()]=0;
+            $numOfRatings[$rating->getBid()]++;
+        }
+        foreach($ratingsToPass as $bid=>$rating){
+            $ratingsToPass[$bid]=$rating/$numOfRatings[$bid]."/5";
         return $this->render('BookstoreBundle:Book:search.html.php',
                 array(
                     'books'=>$result,
                     'searchcat'=>$_POST['type'],
                     'searchterm'=>$_POST['text']
                 ));
-}
+}}
 
 public function detailsAction($id){
-    $book = $this->getDoctrine()
-            ->getRepository('BookstoreBundle:Book')
-            ->find($id);
-    //var_dump($book);
-    return $this->render('BookstoreBundle:Book:details.html.php', array('book' => $book));
+    $em = $this->getDoctrine()->getManager();
+        $book = $em->getRepository('BookstoreBundle:Book')->find($id);
+        if(!$book){
+            throw $this->createNotFoundException("Can't show details: No book found with id ".$id);
+        }
+        $dbRatings=$this->getDoctrine()
+                ->getRepository('BookstoreBundle:Rate')
+                ->findAll();
+        $dbUsers=$this->getDoctrine()
+                ->getRepository('BookstoreBundle:User')
+                ->findAll();
+        $users=array();
+        foreach($dbUsers as $user){
+            $users[$user->getId()]=$user;
+        }
+        $ratings=array();
+        foreach($dbRatings as $rating){
+            if($rating->getBid()!=$id)continue;
+            $ratings[]=array(
+                'user'=>$users[$rating->getUid()]->getUsername(),
+                'rating'=>$rating->getRating()."/5",
+                'comment'=>$rating->getComment()
+            );
+        }
+        if(count($ratings)==0)$ratings[]=array("user"=>"None","rating"=>"NULL","comment"=>"NULL");
+        return $this->render('BookstoreBundle:Book:details.html.php',
+                array('book'=>$book,'ratings'=>$ratings));
 }
 
-public function rateAction(){
-    return $this->render('BookstoreBundle:Book:rate.html.twig');
-}
+ public function rateAction($id) {
+        $em = $this->getDoctrine()->getManager();
+        $rating= new Rate();
+        $rating->setUid($this->get('security.context')->getToken()->getUser()->getId());
+        $rating->setBid($id);
+        $rating->setRating($_POST['rating']);
+        $rating->setComment($_POST['comment']);
+        $em->persist($rating);
+        $em->flush();
+        return $this->redirect($this->generateUrl('display_books',array(
+            'id'=>$id
+        )));
+    }
 }

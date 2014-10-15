@@ -5,47 +5,89 @@ namespace Bookstore\BookBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Bookstore\BookBundle\Entity\Book as Book;
 use Bookstore\BookBundle\Entity\User as User;
+use Bookstore\BookBundle\Entity\Rate as Rate;
 
 /**
+ * Rating
+ *
+ * @ORM\Table(name="rating")
  * @ORM\Entity
- * @ORM\Table(name="rate")
  */
-class Rate {
+class Rate
+{
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="uid", type="integer")
      */
-    protected $id;
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-    /**
-     * @ORM\ManyToOne(targetEntity="Book")
-     * @ORM\JoinColumn(name="book_id", referencedColumnName="id")
-     */
-    protected $book;
-    
-     /**
-     * @ORM\Column(type="integer")
-     */
-    protected $rating;
-    
-     /**
-     * @ORM\Column(type="string")
-     **/
-    protected $comment;
+    private $uid;
 
     /**
-     * Get id
+     * @var integer
+     * @ORM\Id
+     * @ORM\Column(name="bid", type="integer")
+     */
+    private $bid;
+
+    /**
+     * @var integer
+     *
+     * @ORM\Column(name="rating", type="integer")
+     */
+    private $rating;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="comment", type="string", length=255)
+     */
+    private $comment;
+
+
+    /**
+     * Set uid
+     *
+     * @param integer $uid
+     * @return Rate
+     */
+    public function setUid($uid)
+    {
+        $this->uid = $uid;
+
+        return $this;
+    }
+
+    /**
+     * Get uid
      *
      * @return integer 
      */
-    public function getId()
+    public function getUid()
     {
-        return $this->id;
+        return $this->uid;
+    }
+
+    /**
+     * Set bid
+     *
+     * @param integer $bid
+     * @return Rate
+     */
+    public function setBid($bid)
+    {
+        $this->bid = $bid;
+
+        return $this;
+    }
+
+    /**
+     * Get bid
+     *
+     * @return integer 
+     */
+    public function getBid()
+    {
+        return $this->bid;
     }
 
     /**
@@ -92,51 +134,5 @@ class Rate {
     public function getComment()
     {
         return $this->comment;
-    }
-
-    /**
-     * Set user
-     *
-     * @param \Bookstore\BookBundle\Entity\User $user
-     * @return Rate
-     */
-    public function setUser(User $user = null)
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
-    /**
-     * Get user
-     *
-     * @return \Bookstore\BookBundle\Entity\User 
-     */
-    public function getUser()
-    {
-        return $this->user;
-    }
-
-    /**
-     * Set book
-     *
-     * @param \Bookstore\BookBundle\Entity\Book $book
-     * @return Rate
-     */
-    public function setBook(Book $book = null)
-    {
-        $this->book = $book;
-
-        return $this;
-    }
-
-    /**
-     * Get book
-     *
-     * @return \Bookstore\BookBundle\Entity\Book 
-     */
-    public function getBook()
-    {
-        return $this->book;
     }
 }
