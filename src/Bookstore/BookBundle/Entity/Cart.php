@@ -3,73 +3,90 @@
 namespace Bookstore\BookBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Bookstore\BookBundle\Entity\Book;
-use Bookstore\BookBundle\Entity\User;
-//use Bookstore\BookBundle\Entity\Cart as Cart;
 
 /**
- * @ORM\Entity
+ * Cart
+ *
  * @ORM\Table(name="cart")
+ * @ORM\Entity
  */
-class Cart {
+class Cart
+{
+
     /**
-     * @ORM\Column(type="integer")
+     * @var integer
+     *
      * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
+     * @ORM\Column(name="uid", type="integer")
      */
-    protected $id;
-    /**
-     * @ORM\ManyToOne(targetEntity="User")
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
-     */
-    protected $user;
-    /**
-     * @ORM\ManyToOne(targetEntity="Book")
-     * @ORM\JoinColumn(name="book_id", referencedColumnName="id")
-     */
-    protected $book;
-
+    private $uid;
 
     /**
-     * Get id
      *
-     * @return integer 
+     * @ORM\Id
+     * @ORM\OneToOne(targetEntity="\Bookstore\BookBundle\Entity\Book")
+     * @ORM\JoinColumn(name="book_id", referencedColumnName="bid")
      */
-    public function getId()
-    {
-        return $this->id;
-    }
+    private $book;
+    
+    /**
+     * @ORM\Column(name="qty", type="integer")
+     */
+    private $qty;
 
     /**
-     * Set user
+     * Set uid
      *
-     * @param \Bookstore\BookBundle\Entity\User $user
+     * @param integer $uid
      * @return Cart
      */
-    public function setUser(User $user = null)
+    public function setUid($uid)
     {
-        $this->user = $user;
+        $this->uid = $uid;
 
         return $this;
     }
 
     /**
-     * Get user
+     * Get uid
      *
-     * @return \Bookstore\BookBundle\Entity\User 
+     * @return integer 
      */
-    public function getUser()
+    public function getUid()
     {
-        return $this->user;
+        return $this->uid;
+    }
+
+    /**
+     * Set qty
+     *
+     * @param integer $qty
+     * @return Cart
+     */
+    public function setQty($qty)
+    {
+        $this->qty = $qty;
+
+        return $this;
+    }
+
+    /**
+     * Get qty
+     *
+     * @return integer 
+     */
+    public function getQty()
+    {
+        return $this->qty;
     }
 
     /**
      * Set book
      *
-     * @param \Bookstore\BookBundle\Entity\Book $book
+     * @param \ITAS\BookBundle\Entity\Book $book
      * @return Cart
      */
-    public function setBook(Book $book = null)
+    public function setBook(\Bookstore\BookBundle\Entity\Book $book)
     {
         $this->book = $book;
 
@@ -79,7 +96,7 @@ class Cart {
     /**
      * Get book
      *
-     * @return \Bookstore\BookBundle\Entity\Book 
+     * @return \ITAS\BookBundle\Entity\Book 
      */
     public function getBook()
     {

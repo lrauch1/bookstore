@@ -69,11 +69,13 @@ class SecurityController extends Controller
         if(!$user){
             throw $this->createNotFoundException("Can't update details: No user found with id ".$id);
         }
+        $newpass = ($_POST['_newpass']);
         if($_POST['_username'] != $user->getUsername())$user->setUsername($_POST['_username']);
         if($_POST['_email'] != $user->getEmail())$user->setEmail($_POST['_email']);
         if($_POST['_newpass'] != "") {
             if($_POST['_newpass']==$_POST['_confpass']){
-                $user->setPassword(password_hash($_POST['_newpass'], PASSWORD_BCRYPT));
+                $encoder = $this->container->get('security.encoder_factory')->getEncoder($user);
+                $user->setPassword($encoder->encodePassword($newpass, $user->getSalt()));
             } else {
                 throw new AccessDeniedException("Passwords do not match!");
             }

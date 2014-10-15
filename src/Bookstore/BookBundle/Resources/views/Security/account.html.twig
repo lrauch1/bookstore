@@ -1,1 +1,54 @@
-{# empty Twig template #}
+<body>
+    <form action="{{ path('account_change', {'id': id}) }}" method="post">
+        <input type="hidden" id="id" name="_id" value="{{id}}">
+        <table>
+            <tr>
+                <td>
+                    <label for="username">Username:</label>
+                </td>
+                <td>
+                    <input type="text" id="username" name="_username" value="{{ username }}" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="currpass">Current Password:</label>
+                </td>
+                <td>
+                    <input type="password" id="currpass" name="_currpass" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="newpass">New Password:</label>
+                </td>
+                <td>
+                    <input type="password" id="newpass" name="_newpass" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="confpass">Confirm Password:</label>
+                </td>
+                <td>
+                    <input type="password" id="confpass" name="_confpass" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email">Email:</label>
+                </td>
+                <td>
+                    <input type="text" id="email" name="_email" value="{{ email }}"/>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <button type="submit">Change Information</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+<a href="{{path('display_books')}}">Back</a>
+</body>{# empty Twig template #}

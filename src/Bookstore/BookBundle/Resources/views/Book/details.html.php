@@ -43,7 +43,7 @@ EOD;
                 ?>
             </table>
             <a href="<?php
-              //  echo $view['router']->generate('add_cart',array('bid'=>$book->getId()));
+                echo $view['router']->generate('cart_add',array('bid'=>$book->getBid()));
             ?>">Add to cart</a><br>
             <a href="<?php
                 echo $view['router']->generate('display_books');

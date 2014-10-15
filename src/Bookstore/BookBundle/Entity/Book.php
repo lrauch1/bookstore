@@ -16,7 +16,7 @@ class Book {
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    protected $id;
+    protected $bid;
 
     /**
      * @ORM\Column(type="string",	length=100)
@@ -78,8 +78,8 @@ class Book {
      *
      * @return integer 
      */
-    public function getId() {
-        return $this->id;
+    public function getBid() {
+        return $this->bid;
     }
 
     /**
@@ -316,5 +316,9 @@ public function getImg() {
         $this->img = $img;
 
         return $this;
+    }
+    
+        public function __toString() {
+        return serialize($this);
     }
 }

@@ -55,8 +55,10 @@ account_change:
     
     
 cart_add:
-    pattern: /cart/add
+    pattern: /cart/add/{bid}
     defaults: { _controller: BookstoreBundle:Cart:add }
+    requirements:
+        bid: \d+
     
 cart_delete:
     pattern: /cart/delete/{id}
@@ -69,3 +71,7 @@ view_cart:
 cart_buy:
     pattern: /cart/buy
     defaults: { _controller: BookstoreBundle:Cart:buy }  
+    
+update_cart:
+    path: /cart/update
+    defaults: { _controller: BookstoreBundle:Cart:update }

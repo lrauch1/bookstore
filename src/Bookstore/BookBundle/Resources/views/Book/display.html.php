@@ -18,6 +18,7 @@
                 <?php
                     $stripe=false;
                     foreach($books as $book){
+                        if(!isset($ratings[$book->getBid()]))$ratings[$book->getBid()]="Not Rated";
                         $stripe=!$stripe;
                         if ($stripe) {
                             echo "<tr class=\"odd\">";
@@ -26,7 +27,7 @@
                         }
                         $detailurl=$view['router']->generate('details_books',
                                 array(
-                                    'id'=>$book->getId()
+                                    'id'=>$book->getBid()
                                 ));
                         echo<<<EOD
 <td>
