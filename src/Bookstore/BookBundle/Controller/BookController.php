@@ -139,7 +139,7 @@ public function detailsAction($id){
         $rating->setComment($_POST['comment']);
         $em->persist($rating);
         $em->flush();
-        return $this->redirect($this->generateUrl('display_books',array(
+        return $this->redirect($this->generateUrl('details_books',array(
             'id'=>$id
         )));
     }

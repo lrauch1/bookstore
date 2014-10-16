@@ -20,9 +20,9 @@ rate_books:
     pattern: /book/rate
     defaults: { _controller: BookstoreBundle:Book:rate }
     
-create_user:
-    pattern: /user/create
-    defaults: { _controller: BookstoreBundle:User:create }
+register:
+    pattern: /user/register
+    defaults: { _controller: BookstoreBundle:Security:register }
     
 edit_user:
     pattern: /user/edit/{id}
@@ -68,9 +68,9 @@ view_cart:
     pattern: /cart/view
     defaults: { _controller: BookstoreBundle:Cart:view }
     
-cart_buy:
+purchase:
     pattern: /cart/buy
-    defaults: { _controller: BookstoreBundle:Cart:buy }  
+    defaults: { _controller: BookstoreBundle:Cart:purchase }  
     
 update_cart:
     path: /cart/update

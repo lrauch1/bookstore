@@ -14,7 +14,7 @@ class LoadEvents implements FixtureInterface, ContainerAwareInterface
     public function load(ObjectManager $manager)
     {
         $user = new User();
-        $user->setUsername('tony');
+        $user->setUsername('kevin');
         $user->setPassword($this->encodePassword($user, "pass"));
         $user->setEmail("nope@fake.com");
         $user->setIsActive(true);

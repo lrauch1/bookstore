@@ -84,4 +84,13 @@ class SecurityController extends Controller
         return $this->redirect($this->generateUrl('account',array('id'=>$id)));
     }
     
+    public function registerAction(){
+                $form = $this->createFormBuilder($user)
+                ->add('firstName', 'text')
+                ->add('lastName', 'text')
+                ->add('dob', 'datetime')
+                ->add('gpa', 'integer')
+                ->add('save', 'submit')
+                ->getForm();
+    }
 }
