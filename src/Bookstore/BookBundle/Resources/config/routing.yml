@@ -21,9 +21,12 @@ rate_books:
     defaults: { _controller: BookstoreBundle:Book:rate }
     
 register:
-    pattern: /user/register
+    pattern: /account/register
     defaults: { _controller: BookstoreBundle:Security:register }
     
+addAccount:
+    pattern: /account/add
+    defaults: { _controller: BookstoreBundle:Security:addAccount }    
 edit_user:
     pattern: /user/edit/{id}
     defaults: { _controller: BookstoreBundle:User:edit }

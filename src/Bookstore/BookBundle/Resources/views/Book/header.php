@@ -70,7 +70,9 @@ if($security->isGranted('IS_AUTHENTICATED_REMEMBERED')){
                     }else{
                         echo "<a href='".
                                 $view['router']->generate('login')
-                        . "'>Login</a>";
+                        . "'>Login</a><br><a href='".
+                            $view['router']->generate('register')
+                        . "'>Register</a>";
                     }
                 ?>
             </td>

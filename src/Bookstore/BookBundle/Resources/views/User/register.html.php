@@ -1,16 +1,26 @@
-<?php
-
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of register
- *
- * @author Lindsey
- */
-class register {
-    //put your code here
-}
+<body>
+    <form action="{{ path('addAccount') }}" method="post">
+        <table>
+            <tr>
+                <td>Username:</td>
+                <td><input type="text" name="uname"></td>
+            </tr>
+                        <tr>
+                <td>Password:</td>
+                <td><input type="password" name="pword"></td>
+            </tr>
+                        <tr>
+                <td>Confirm Password:</td>
+                <td><input type="password" name="cpword"></td>
+            </tr>
+                        <tr>
+                <td>Email:</td>
+                <td><input type="email" name="email"></td>
+            </tr>
+                        <tr>
+                <td></td>
+                <td><input type="submit"></td>
+            </tr>
+        </table>
+    </form>
+</body>
