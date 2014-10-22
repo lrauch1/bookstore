@@ -15,6 +15,12 @@ class BookController extends Controller
         return $this->browseAction();
     }
     
+       /**
+     * Shows all books in database
+     * 
+     * @return String HTML page
+     */
+    
 public function browseAction(){
      $books = $this->getDoctrine()
                 ->getRepository('BookstoreBundle:Book')
@@ -25,18 +31,28 @@ public function browseAction(){
         $ratingsToPass=array();
         $numOfRatings=array();
         foreach ($ratings as $rating) {
-            if(!isset($ratingsToPass[$rating->getBid()]))$ratingsToPass[$rating->getBid()]=0;
+            if(!isset($ratingsToPass[$rating->getBid()]))
+            $ratingsToPass[$rating->getBid()]=0;
             $ratingsToPass[$rating->getBid()]+=$rating->getRating();
-            if(!isset($numOfRatings[$rating->getBid()]))$numOfRatings[$rating->getBid()]=0;
+            
+            if(!isset($numOfRatings[$rating->getBid()]))
+            $numOfRatings[$rating->getBid()]=0;
             $numOfRatings[$rating->getBid()]++;
         }
         foreach($ratingsToPass as $bid=>$rating){
             $ratingsToPass[$bid]=$rating/$numOfRatings[$bid]."/5";
         }
         return $this->render('BookstoreBundle:Book:display.html.php', array('books' => $books, 'ratings'=>$ratingsToPass));
-    //return $this->render('BookstoreBundle:Book:browse.php');
+
     }    
-    
+        /**
+     * Takes a search type and a partial value,
+     * which is then passed to the database,
+     * returning all books that meet that partial.
+     * 
+     * @return String HTML page
+     * @throws \Exception if invalid type passed
+     */
 public function searchAction(){
         $repository=$this->getDoctrine()->getRepository('BookstoreBundle:Book');
         switch ($_POST['type']) {
@@ -85,9 +101,12 @@ public function searchAction(){
         $ratingsToPass=array();
         $numOfRatings=array();
         foreach ($ratings as $rating) {
-            if(!isset($ratingsToPass[$rating->getBid()]))$ratingsToPass[$rating->getBid()]=0;
+            if(!isset($ratingsToPass[$rating->getBid()]))
+            $ratingsToPass[$rating->getBid()]=0;
             $ratingsToPass[$rating->getBid()]+=$rating->getRating();
-            if(!isset($numOfRatings[$rating->getBid()]))$numOfRatings[$rating->getBid()]=0;
+            
+            if(!isset($numOfRatings[$rating->getBid()]))
+            $numOfRatings[$rating->getBid()]=0;
             $numOfRatings[$rating->getBid()]++;
         }
         foreach($ratingsToPass as $bid=>$rating){
@@ -99,7 +118,13 @@ public function searchAction(){
                     'searchterm'=>$_POST['text']
                 ));
 }}
-
+    /**
+     * Shows all details about a given book
+     * 
+     * @param integer $id ID of book to show
+     * @return String HTML page
+     * @throws NotFoundException if no book with passed id is found
+     */
 public function detailsAction($id){
     $em = $this->getDoctrine()->getManager();
         $book = $em->getRepository('BookstoreBundle:Book')->find($id);
@@ -129,7 +154,12 @@ public function detailsAction($id){
         return $this->render('BookstoreBundle:Book:details.html.php',
                 array('book'=>$book,'ratings'=>$ratings));
 }
-
+    /**
+     * Rates a given book.
+     * 
+     * @param integer $id ID of book to rate
+     * @return String HTML page
+     */
  public function rateAction($id) {
         $em = $this->getDoctrine()->getManager();
         $rating= new Rate();

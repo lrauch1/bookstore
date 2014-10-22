@@ -6,8 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Bookstore\BookBundle\Entity\Cart;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
-//use Bookstore\BookBundle\Entity\Books;
 
 class CartController extends Controller {
 
@@ -28,6 +28,12 @@ class CartController extends Controller {
             throw new AccessDeniedException("Need $role!");
         }
     }
+    /**
+     * action to view cart
+     * 
+     * @return string HTML page
+     */
+    
     public function viewAction() {
         $this->enforceUserSecurity();
         $uid=$this->container->get('security.context')->getToken()->getUser()->getId();
@@ -37,7 +43,11 @@ class CartController extends Controller {
             'cart'=>$cart
         ));
     }
-    
+     /* add a book to the cart
+     * 
+     * @param type $bid id of book to add
+     * @return string
+     */
     public function addAction($bid) {
         $this->enforceUserSecurity();
         $uid=$this->container->get('security.context')->getToken()->getUser()->getId();
@@ -60,7 +70,12 @@ class CartController extends Controller {
             'id'=>$bid
         )));
     }
-    
+      /**
+     * Update qty of items in cart
+     * 
+     * @return string
+     * returns viewAction
+     */
      public function updateAction() {
         $em = $this->getDoctrine()->getManager();
         $bid=$_POST['bid'];
@@ -78,7 +93,11 @@ class CartController extends Controller {
             'status'=>true
         )));
     }
-    
+       /**
+     * shows invoice and empties cart
+     * 
+     * @return string html page
+     */
     public function purchaseAction() {
         $this->enforceUserSecurity();
         $em = $this->getDoctrine()->getManager();
@@ -93,15 +112,6 @@ class CartController extends Controller {
         return $this->render('BookstoreBundle:Cart:purchase.html.php',array(
             'cart'=>$cart
         ));
-    }
-
-    public function deleteAction() {
-        return $this->render('BookstoreBundle:Cart:delete.html.twig');
-    }
-
-
-    public function buyAction() {
-        return $this->render('BookstoreBundle:Cart:buy.html.twig');
     }
 
 }

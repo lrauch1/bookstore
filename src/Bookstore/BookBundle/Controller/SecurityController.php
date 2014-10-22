@@ -28,7 +28,12 @@ class SecurityController extends Controller {
             throw new AccessDeniedException("Need $role!");
         }
     }
-
+ /**
+     * used to log users in
+     * 
+     * @param Request $request
+     * @return String HTML login page
+     */
     public function loginAction(Request $request) {
         $session = $request->getSession();
 
@@ -50,7 +55,11 @@ class SecurityController extends Controller {
                         )
         );
     }
-
+     /**
+     * used to show account settings & allow user to modify
+     * @see SecurityController::account_changeAction() called when submitted
+     * @return string HTML page
+     */
     public function accountAction() {
         $this->enforceUserSecurity();
         $securityContext = $this->container->get('security.context');
@@ -63,7 +72,14 @@ class SecurityController extends Controller {
                         )
         );
     }
-
+ /**
+     * used to update account settings after a change
+     * @param integer $id user id
+     * @return string HTML page
+     * @see SecurityController::accountAction() for returned page
+     * @throws NotFoundException if user cannot be found
+     * @throws AccessDeniedException if passwords do not match
+     */
     public function account_changeAction($id) {
         $this->enforceUserSecurity();
         $em = $this->getDoctrine()->getManager();

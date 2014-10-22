@@ -3,8 +3,8 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <link rel="stylesheet" type="text/css" href="<?php echo $view['assets']->getUrl('css/site.css') ?>"> 
-        <script src="https://efalder.ca/jquery.min.js"></script>
-        <title>ITAS255 Project 2 - Browse</title>
+        <script src="/js.js"></script>
+        <title>Bookstore</title>
     </head>
     <body>
         <?php
@@ -51,11 +51,6 @@ if($security->isGranted('IS_AUTHENTICATED_REMEMBERED')){
                                             'id'=>$uid
                                         ))
                                 ."'>View Cart</a><br>";
-                        //TODO
-//                        $repository=$this->getDoctrine()->getRepository('BookstoreBundle:Cart');
-//                        $cart=$repository->findByUid($uid);
-//                        echo count($cart);
-//                        echo " Item(s)";
                     }else{
                         echo "<strike>Cart</strike><br>0 Items";
                     }

@@ -21,16 +21,7 @@ security:
                 target: display_books
             anonymous: ~
             
-        cart:
-            pattern: ^/cart
-            form_login:
-                login_path: login
-                check_path: login_check
-                #use_referer: true
-            logout: 
-                path: /logout
-                target: display_books
-            anonymous: ~
+        
             #http_basic:
                 #realm: "Secured Demo Area"
     access_control:

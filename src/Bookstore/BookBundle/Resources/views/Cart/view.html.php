@@ -1,13 +1,13 @@
 <?php
-
-/* 
+/*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
 include 'header.php';
-if(isset($_GET['status'])&&$_GET['status']==1)echo<<<'EOD'
+if (isset($_GET['status']) && $_GET['status'] == 1)
+    echo<<<'EOD'
 <script>
     $(document).ready(function(){
         $('#update').fadeIn('slow').delay(3000).fadeOut('slow');
@@ -27,20 +27,19 @@ EOD;
         <th>Price (total)</th>
     </tr>
     <?php
-        $stripe=false;
-        foreach($cart as $cartentry){
-            $stripe=!$stripe;
-            $book=$cartentry->getBook();
-            if ($stripe) {
-                echo "<tr class=\"odd\">";
-            } else {
-                echo "<tr class=\"even\">";
-            }
-            $detailurl=$view['router']->generate('details_books',
-                    array(
-                        'id'=>$book->getBid()
-                    ));
-            echo<<<EOD
+    $stripe = false;
+    foreach ($cart as $cartentry) {
+        $stripe = !$stripe;
+        $book = $cartentry->getBook();
+        if ($stripe) {
+            echo "<tr class=\"odd\">";
+        } else {
+            echo "<tr class=\"even\">";
+        }
+        $detailurl = $view['router']->generate('details_books', array(
+            'id' => $book->getBid()
+        ));
+        echo<<<EOD
 <td>
     <a href="{$detailurl}">
         <img src="{$book->getImg()}" width=100>
@@ -71,13 +70,13 @@ EOD;
 </form>
 <td class=itemtotal>\$ 
 EOD;
-echo $book->getPrice()*$cartentry->getQty();
-echo<<<EOD
+        echo $book->getPrice() * $cartentry->getQty();
+        echo<<<EOD
 </td>
 </tr>
 EOD;
-                    }
-                ?>
+    }
+    ?>
 </table>
 <div id="totals">
     <table border="1">
@@ -97,24 +96,24 @@ EOD;
     </table>
 </div>
 <script>
-    $(document).ready(function(){
+    $(document).ready(function() {
         var sum = 0;
-        $('.itemtotal').each(function(){
-            sum += parseFloat($(this).text().substring(2,$(this).text().length));  //Or this.innerHTML, this.innerText
+        $('.itemtotal').each(function() {
+            sum += parseFloat($(this).text().substring(2, $(this).text().length));  //Or this.innerHTML, this.innerText
         });
-        sum=sum.toFixed(2);
-        $("#subtotal").text("$ "+sum);
-        var tax = sum*0.12;
-        tax=tax.toFixed(2);
-        $("#taxtotal").text("$ "+tax);
+        sum = sum.toFixed(2);
+        $("#subtotal").text("$ " + sum);
+        var tax = sum * 0.12;
+        tax = tax.toFixed(2);
+        $("#taxtotal").text("$ " + tax);
         sum = parseFloat(tax) + parseFloat(sum);
-        sum=sum.toFixed(2);
-        $("#finaltotal").text("$ "+sum);
+        sum = sum.toFixed(2);
+        $("#finaltotal").text("$ " + sum);
     });
     $('#purchase').click(function() {
         window.location.href = '<?php
-            echo $view['router']->generate("purchase");
-        ?>';
+    echo $view['router']->generate("purchase");
+    ?>';
     });
 </script>
 </body>

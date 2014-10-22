@@ -8,12 +8,8 @@
                     <th>Title</th>
                     <th>Author</th>
                     <th>ISBN</th>
-                    <!--<th>Course</th>-->
-                    <!--<th>Instructor</th>-->
                     <th>Price</th>
                     <th>Rating</th>
-                    <!--<th>Description</th>-->
-                    <!--<th>Quantity</th>-->
                 </tr>
                 <?php
                     $stripe=false;
